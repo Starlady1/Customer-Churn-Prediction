@@ -1,0 +1,26 @@
+
+# Fit the preprocessing pipeline to your training data
+transformed_data = preprocessor.fit(X_train)
+
+transformed_data
+
+# Transform the training and testing data using the preprocessing pipeline
+X_train_transformed = preprocessor.transform(X_train)
+X_test_transformed = preprocessor.transform(X_test)
+
+# Convert the transformed data back to DataFrames
+X_train_transformed_df = pd.DataFrame(X_train_transformed, columns=preprocessor.get_feature_names_out())
+X_test_transformed_df = pd.DataFrame(X_test_transformed, columns=preprocessor.get_feature_names_out())
+
+# Create directory if it doesn't exist
+directory = 'cleaned_Churn_df'
+if not os.path.exists(directory):
+    os.makedirs(directory)
+
+# Save the transformed training and testing data to CSV files in the directory
+X_train_transformed_df.to_csv(os.path.join(directory, 'X_train_transformed.csv'), index=False)
+X_test_transformed_df.to_csv(os.path.join(directory, 'X_test_transformed.csv'), index=False)
+y_train.to_csv(os.path.join(directory, 'y_train.csv'), index=False)
+y_test.to_csv(os.path.join(directory, 'y_test.csv'), index=False)
+
+print("Data saved successfully in the directory 'cleaned_Churn_df'!")
